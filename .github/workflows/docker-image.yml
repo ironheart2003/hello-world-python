@@ -5,9 +5,9 @@ on:
     branches: [ main ]
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_USERNAME: ${{ secrets.kishlaykumar15 }}
   IMAGE_NAME: hello-world-python
-  CUSTOM_TAG: ${{ secrets.CUSTOM_TAG }}
+  CUSTOM_TAG: ${{ secrets.22f1001112 }}
 
 jobs:
   build-and-push:
@@ -20,21 +20,21 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        username: ${{ secrets.kishlaykumar15 }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build Docker image
       run: |
-        docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:latest .
+        docker build -t $kishlaykumar15/$IMAGE_NAME:latest .
 
     - name: Tag image with custom tag
       run: |
-        docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:$CUSTOM_TAG
+        docker tag $kishlaykumar15/$IMAGE_NAME:latest $kishlaykumar15/$IMAGE_NAME:$22f1001112
 
     - name: Push latest tag
       run: |
-        docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+        docker push $kishlaykumar15/$IMAGE_NAME:latest
 
     - name: Push custom tag
       run: |
-        docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CUSTOM_TAG
+        docker push $kishlaykumar15/$IMAGE_NAME:$22f1001112
