@@ -5,36 +5,43 @@ on:
     branches: [ main ]
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.kishlaykumar15 }}
-  IMAGE_NAME: hello-world-python
-  CUSTOM_TAG: ${{ secrets.22f1001112 }}
+  DOCKERHUB_USERNAME: ${{ secrets.kishlaykumar15 }}  # Your Docker Hub username
+  IMAGE_NAME: hello-world-python                        # Your image name
+  CUSTOM_TAG: "22f1001112"                             # Your custom tag
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.kishlaykumar15 }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # 2. Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build Docker image
-      run: |
-        docker build -t $kishlaykumar15/$IMAGE_NAME:latest .
+      # 3. Build Docker image
+      - name: Build image
+        run: |
+          docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:latest .
 
-    - name: Tag image with custom tag
-      run: |
-        docker tag $kishlaykumar15/$IMAGE_NAME:latest $kishlaykumar15/$IMAGE_NAME:$22f1001112
+      # 4. Tag with custom tag
+      - name: Tag image
+        run: |
+          docker tag $DOCKERHUB_USERNAME/$IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:$CUSTOM_TAG
 
-    - name: Push latest tag
-      run: |
-        docker push $kishlaykumar15/$IMAGE_NAME:latest
+      # 5. Push both tags
+      - name: Push images
+        run: |
+          docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+          docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CUSTOM_TAG
 
-    - name: Push custom tag
-      run: |
-        docker push $kishlaykumar15/$IMAGE_NAME:$22f1001112
+      # (Optional) Debug step
+      - name: Verify tags
+        run: |
+          docker images | grep $DOCKERHUB_USERNAME/$IMAGE_NAME
