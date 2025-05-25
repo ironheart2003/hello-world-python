@@ -28,7 +28,7 @@ jobs:
       # 3. Build Docker image
       - name: Build image
         run: |
-          docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:latest .
+          docker build -t $kishlaykumar15/$IMAGE_NAME:latest .
 
       # 4. Tag with custom tag
       - name: Tag image
